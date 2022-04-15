@@ -1,4 +1,4 @@
-package userInput
+package main
 
 import (
 	"fmt"
@@ -11,6 +11,7 @@ var userSelectionValue int
 
 func UserIntInput(question string) int {
 	fmt.Println(question)
+	userSelection = ""
 	fmt.Scanln(&userSelection)
 	userSelectionValue, _ = strconv.Atoi(userSelection)
 	return userSelectionValue
@@ -36,8 +37,3 @@ func UserStringInput(question string) string {
 	userSelectionCapital := strings.Title(strings.ToLower(userSelection))
 	return userSelectionCapital
 }
-
-func Helloworld() string{
-	return "hello"
-}
-

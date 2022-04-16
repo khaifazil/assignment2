@@ -1,11 +1,12 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 )
 
-func showMainMenu(){
-		
+func showMainMenu() {
+
 	fmt.Println("\nMain Menu")
 	fmt.Println("=========")
 	fmt.Println("1. View all your bookings")
@@ -18,34 +19,45 @@ func showMainMenu(){
 }
 
 func main() {
-	
+
+	defer func() {
+		if err := recover(); err != nil {
+			fmt.Println("Trapped panic:", err)
+		}
+	}()
+
 	//user interface
 	// fmt.Println("Welcome to TRIFECTA LIMO SERVICES")
 	// userName:= UserStringInput("Please enter your username: ")
 	// UserStringInput("Please enter your password: ")
-	
+
 	// fmt.Printf("Logging in...\n")
 	// fmt.Printf("\nWelcome, %v!\n", userName)
 	showMainMenu()
 
-	userSelection := UserIntInput("\nWhat would you like to do?" )
+	userSelection := UserIntInput("\nWhat would you like to do?")
+	if userSelection < 1 || userSelection > 7 {
+		panic(errors.New("invalid Selection"))
+	}
 
 	switch userSelection {
 	case 1:
 	case 2:
-		userMonth := UserStringInput("Enter month (E.g., Jan) : ")
-		userDate := UserIntInput("Enter date: ")
-		dateValue, _:= convertDate(userMonth, userDate)
-		// carSelection = UserStringInput("Enter car selection: ")
-		// bookingTime = UserIntInput("Enter booking time in 24HR format(E.g., 1300): ")
-		// pickUp = UserStringInput("Enter pick up address: ")
-		// dropOff = UserStringInput("Enter drop off address: ")
-		// contactInfo = UserIntInput("Enter mobile number: ")
-		// remarks = UserStringInput("Remarks: ")
+		// listCars()
+		// carSelection := UserStringInput("Enter car selection: ")
+		// if err := checkCarSelection(carSelection); err != nil {
+		// 	panic(err)
+		// }
+		// userDate := UserStringInput("Enter date (E.g. dd/mm/yyyy): ")
+		// bookingTime := UserIntInput("Enter booking time in 24HR format(E.g., 1300): ")
+		// pickUp := UserStringInput("Enter pick up address: ")
+		// dropOff := UserStringInput("Enter drop off address: ")
+		// contactInfo := UserIntInput("Enter mobile number: ")
+		// remarks := UserStringInput("Remarks: ")
 
+		// bookings.makeNewBooking(carSelection, userDate, bookingTime, userName, pickUp, dropOff, contactInfo, remarks)
 
-
-		// makeNewBooking(userName string, carSelection string, bookingTime int, pickUp string, dropOff string, contactInfo int, remarks string)
+		bookings.printAllBookings()
 
 	case 3:
 	}

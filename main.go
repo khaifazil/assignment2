@@ -6,6 +6,39 @@ import (
 	"time"
 )
 
+
+func init() {
+	userBst.createUser("khai", "password1")
+	userBst.createUser("mary", "password1")
+	userBst.createUser("john", "password1")
+	userBst.createUser("Doug", "password1")
+
+	bookings.makeNewBooking("Car2", "03/06/2022", 200, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 300, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 400, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 500, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 600, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 700, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 800, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 900, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 1000, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 1200, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 1100, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 1300, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 1400, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 1500, "john", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 1600, "john", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 1700, "john", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 1800, "john", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 1900, "john", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 2000, "john", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 2100, "john", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 2200, "john", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 2300, "john", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 2400, "john", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "25/05/1994", 1500, "mary", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+}
+
 func showMainMenu() {
 
 	fmt.Println("\nMain Menu")
@@ -20,20 +53,20 @@ func showMainMenu() {
 }
 
 func main() {
-	
+
 	defer func() {
 		if err := recover(); err != nil {
 			fmt.Println("Trapped panic:", err)
 		}
-		}()
-		
-		// fmt.Println(car2[1])
-		// user interface
-		fmt.Println("Welcome to TRIFECTA LIMO SERVICES")
-		userName := UserStringInput("Please enter your username: ")
-		// password:= UserStringInput("Please enter your password: ")
-		
-		fmt.Printf("Logging in...\n")
+	}()
+
+	// fmt.Println(car2[1])
+	// user interface
+	fmt.Println("Welcome to TRIFECTA LIMO SERVICES")
+	userName := UserStringInput("Please enter your username: ")
+	// password:= UserStringInput("Please enter your password: ")
+
+	fmt.Printf("Logging in...\n")
 	fmt.Printf("\nWelcome, %v!\n", userName)
 	showMainMenu()
 
@@ -44,6 +77,7 @@ func main() {
 
 	switch userSelection {
 	case 1:
+		
 	case 2:
 		listCars()
 		carSelection := UserStringInput("Enter car selection: ")
@@ -78,11 +112,11 @@ func main() {
 		}
 		remarks := UserStringInput("Remarks: ")
 
-		if err:= bookings.makeNewBooking(carSelection, userDate, bookingTime, userName, pickUp, dropOff, contactInfo, remarks); err != nil {
+		if booking, err := bookings.makeNewBooking(carSelection, userDate, bookingTime, userName, pickUp, dropOff, contactInfo, remarks); err != nil {
 			panic(err)
+		} else {
+			bookings.printBookingNode(booking)
 		}
-
-		bookings.printAllBookings()
 
 	case 3:
 	}

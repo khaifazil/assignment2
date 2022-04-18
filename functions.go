@@ -17,12 +17,11 @@ func convertDate(date string) int {
 	return daysInMonths[month] + userDate.Day()
 }
 
-func convertTime(time int) (int, error) {
-	if time < 0100 || time > 2400 || time%100 != 0 {
-		return 0, errors.New("invalid time")
+func convertTime(time int) int {
+	if time == 2400 {
+		time = 0000
 	}
-
-	return time/100 - 1, nil
+	return time / 100
 }
 
 func getCarArr(car string) *[365][24]*bookingInfoNode {

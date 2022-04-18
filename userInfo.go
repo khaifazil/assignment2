@@ -7,6 +7,7 @@ import (
 type userInfoNode struct {
 	userName string
 	password string
+	userBookings []*bookingInfoNode
 	left     *userInfoNode
 	right    *userInfoNode
 }
@@ -14,6 +15,8 @@ type userInfoNode struct {
 type BST struct {
 	root *userInfoNode
 }
+
+var userBst = &BST{root: nil}
 
 func (bst *BST) insertUserNode(u **userInfoNode, userName string, password string) error {
 
@@ -72,12 +75,3 @@ func (bst *BST) searchUser(userName string) (*userInfoNode, error) {
 }
 
 
-func init() {
-	userBst := &BST{root: nil}
-
-	userBst.createUser("khai", "password1")
-	userBst.createUser("Iza", "password1")
-	userBst.createUser("Joseph", "password1")
-	userBst.createUser("Doug", "password1")
-
-}

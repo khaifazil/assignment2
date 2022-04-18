@@ -31,11 +31,6 @@ var bookings = &linkedList{nil, nil, 0}
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
-
-
-	bookings.makeNewBooking("Car2", "03/06/2022", 0100, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
-	bookings.makeNewBooking("Car3", "25/05/1994", 1400, "john", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
-	bookings.makeNewBooking("Car1", "25/05/1994", 1500, "mary", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
 }
 
 func makeRandomBookingId(length int) string {
@@ -48,13 +43,13 @@ func makeRandomBookingId(length int) string {
 	return string(bookingId)
 }
 
-func (b *linkedList) makeNewBooking(car string, date string, bookingTime int, userName string, pickUp string, dropOff string, contactInfo int, remarks string) error {
-	t, _ := convertTime(bookingTime)
+func (b *linkedList) makeNewBooking(car string, date string, bookingTime int, userName string, pickUp string, dropOff string, contactInfo int, remarks string) (*bookingInfoNode, error) {
+	t := convertTime(bookingTime)
 	d := convertDate(date)
 	carArr := getCarArr(car)
 
 	if carArr[d][t] != nil {
-		return errors.New("there is already a booking at that time and date")
+		return nil, errors.New("there is already a booking at that time and date")
 	}
 
 	bookingId := makeRandomBookingId(6)
@@ -85,9 +80,12 @@ func (b *linkedList) makeNewBooking(car string, date string, bookingTime int, us
 	}
 
 	(*carArr)[d][t] = newBookingInfoNode
-	// fmt.Println(carArr[d][t])
+
+	userNode, _:= userBst.searchUser(userName)
+	userNode.userBookings = append(userNode.userBookings, newBookingInfoNode)
+
 	b.size++
-	return nil
+	return newBookingInfoNode, nil
 }
 
 func (b *linkedList) printAllBookings() error {
@@ -123,5 +121,24 @@ func (b *linkedList) printAllBookings() error {
 		fmt.Printf("\nBooking ID: %v\n", currentNode.bookingId)
 		fmt.Println("----------------------------------------------------------------")
 	}
+	return nil
+}
+
+func (b *linkedList) printBookingNode(ptr *bookingInfoNode) error {
+	if ptr == nil {
+		panic(errors.New("booking not found"))
+	}
+	fmt.Println("Booking has been made!")
+	fmt.Println("----------------------")
+	fmt.Printf("\nCar: %v", ptr.car)
+	fmt.Printf("\nDate: %v", ptr.date)
+	fmt.Printf("\nTime: %v", ptr.bookingTime)
+	fmt.Printf("\nName: %v", ptr.userName)
+	fmt.Printf("\nPickup Address : %v", ptr.pickUp)
+	fmt.Printf("\nDropoff Address: %v", ptr.dropOff)
+	fmt.Printf("\nContact information: %v", ptr.contactInfo)
+	fmt.Printf("\nRemarks: %v", ptr.remarks)
+	fmt.Printf("\nBooking ID: %v\n", ptr.bookingId)
+
 	return nil
 }

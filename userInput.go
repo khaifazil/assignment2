@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"strconv"
 	"strings"
@@ -9,14 +10,14 @@ import (
 var userSelection string
 var userSelectionValue int
 
-func UserIntInput(question string) int {
+func userIntInput(question string) int {
 	fmt.Println(question)
 	userSelection = ""
 	fmt.Scanln(&userSelection)
 	userSelectionValue, _ = strconv.Atoi(userSelection)
 	return userSelectionValue
 }
-func UserStringInput(question string) string {
+func userStringInput(question string) string {
 	fmt.Println(question)
 	userSelection = ""
 	fmt.Scanln(&userSelection)
@@ -24,8 +25,15 @@ func UserStringInput(question string) string {
 	return userSelectionCapital
 }
 
-func UserInputYN(question string) bool{
-	for{
+func userRawStringInput(question string) string {
+	fmt.Println(question)
+	userSelection = ""
+	fmt.Scanln(&userSelection)
+	return userSelection
+}
+
+func userInputYN(question string) bool {
+	for {
 		fmt.Println(question, "(y/n): ")
 		fmt.Scanln(&userSelection)
 		if userSelection == "y" {
@@ -36,4 +44,18 @@ func UserInputYN(question string) bool{
 			fmt.Println("Invalid input. Please reply with 'y' or 'n'.")
 		}
 	}
+}
+
+func backToMain() {
+	fmt.Println("\nPress enter to go back to main menu...")
+		fmt.Scanln(&userSelection)
+		main()
+}
+
+func getSelection(firstSelection int, lastSelection int) (int, error) {
+	userSelection := userIntInput("\nChoose an option: ")
+	if userSelection < firstSelection || userSelection > lastSelection {
+		return userSelection, errors.New("invalid Selection")
+	}
+		return userSelection, nil
 }

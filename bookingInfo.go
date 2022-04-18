@@ -31,6 +31,36 @@ var bookings = &linkedList{nil, nil, 0}
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
+
+	userBst.createUser("khai", "password1")
+	userBst.createUser("mary", "password1")
+	userBst.createUser("john", "password1")
+	userBst.createUser("doug", "password1")
+
+	bookings.makeNewBooking("Car2", "03/06/2022", 200, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 300, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 400, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 500, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 600, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 700, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 800, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 900, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 1000, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 1200, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 1100, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 1300, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 1400, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 1500, "john", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 1600, "john", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 1700, "john", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 1800, "john", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 1900, "john", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 2000, "john", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 2100, "john", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 2200, "john", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 2300, "john", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "03/06/2022", 2400, "john", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "25/05/1994", 1500, "mary", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
 }
 
 func makeRandomBookingId(length int) string {
@@ -88,48 +118,46 @@ func (b *linkedList) makeNewBooking(car string, date string, bookingTime int, us
 	return newBookingInfoNode, nil
 }
 
-func (b *linkedList) printAllBookings() error {
-	if b.head == nil {
-		return errors.New("no bookings")
-	}
-	currentNode := b.head
-	index := 1
-	fmt.Println("\nBookings:")
-	fmt.Printf("\nBooking no.%v", index)
-	fmt.Printf("\nCar: %v", currentNode.car)
-	fmt.Printf("\nDate: %v", currentNode.date)
-	fmt.Printf("\nTime: %v", currentNode.bookingTime)
-	fmt.Printf("\nName: %v", currentNode.userName)
-	fmt.Printf("\nPickup Address : %v", currentNode.pickUp)
-	fmt.Printf("\nDropoff Address: %v", currentNode.dropOff)
-	fmt.Printf("\nContact information: %v", currentNode.contactInfo)
-	fmt.Printf("\nRemarks: %v", currentNode.remarks)
-	fmt.Printf("\nBooking ID: %v\n", currentNode.bookingId)
-	fmt.Println("----------------------------------------------------------------")
-	for currentNode.next != nil {
-		currentNode = currentNode.next
-		index++
-		fmt.Printf("\nBooking no.%v", index)
-		fmt.Printf("\nCar: %v", currentNode.car)
-		fmt.Printf("\nDate: %v", currentNode.date)
-		fmt.Printf("\nTime: %v", currentNode.bookingTime)
-		fmt.Printf("\nName: %v", currentNode.userName)
-		fmt.Printf("\nPickup Address : %v", currentNode.pickUp)
-		fmt.Printf("\nDropoff Address: %v", currentNode.dropOff)
-		fmt.Printf("\nContact information: %v", currentNode.contactInfo)
-		fmt.Printf("\nRemarks: %v", currentNode.remarks)
-		fmt.Printf("\nBooking ID: %v\n", currentNode.bookingId)
-		fmt.Println("----------------------------------------------------------------")
-	}
-	return nil
-}
+// func (b *linkedList) printAllBookings() error {
+// 	if b.head == nil {
+// 		return errors.New("no bookings")
+// 	}
+// 	currentNode := b.head
+// 	index := 1
+// 	fmt.Println("\nBookings:")
+// 	fmt.Printf("\nBooking no.%v", index)
+// 	fmt.Printf("\nCar: %v", currentNode.car)
+// 	fmt.Printf("\nDate: %v", currentNode.date)
+// 	fmt.Printf("\nTime: %v", currentNode.bookingTime)
+// 	fmt.Printf("\nName: %v", currentNode.userName)
+// 	fmt.Printf("\nPickup Address : %v", currentNode.pickUp)
+// 	fmt.Printf("\nDropoff Address: %v", currentNode.dropOff)
+// 	fmt.Printf("\nContact information: %v", currentNode.contactInfo)
+// 	fmt.Printf("\nRemarks: %v", currentNode.remarks)
+// 	fmt.Printf("\nBooking ID: %v\n", currentNode.bookingId)
+// 	fmt.Println("----------------------------------------------------------------")
+// 	for currentNode.next != nil {
+// 		currentNode = currentNode.next
+// 		index++
+// 		fmt.Printf("\nBooking no.%v", index)
+// 		fmt.Printf("\nCar: %v", currentNode.car)
+// 		fmt.Printf("\nDate: %v", currentNode.date)
+// 		fmt.Printf("\nTime: %v", currentNode.bookingTime)
+// 		fmt.Printf("\nName: %v", currentNode.userName)
+// 		fmt.Printf("\nPickup Address : %v", currentNode.pickUp)
+// 		fmt.Printf("\nDropoff Address: %v", currentNode.dropOff)
+// 		fmt.Printf("\nContact information: %v", currentNode.contactInfo)
+// 		fmt.Printf("\nRemarks: %v", currentNode.remarks)
+// 		fmt.Printf("\nBooking ID: %v\n", currentNode.bookingId)
+// 		fmt.Println("----------------------------------------------------------------")
+// 	}
+// 	return nil
+// }
 
-func (b *linkedList) printBookingNode(ptr *bookingInfoNode) error {
+func printBookingNode(ptr *bookingInfoNode) error {
 	if ptr == nil {
 		panic(errors.New("booking not found"))
 	}
-	fmt.Println("Booking has been made!")
-	fmt.Println("----------------------")
 	fmt.Printf("\nCar: %v", ptr.car)
 	fmt.Printf("\nDate: %v", ptr.date)
 	fmt.Printf("\nTime: %v", ptr.bookingTime)

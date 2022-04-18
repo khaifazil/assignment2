@@ -16,6 +16,13 @@ func UserIntInput(question string) int {
 	userSelectionValue, _ = strconv.Atoi(userSelection)
 	return userSelectionValue
 }
+func UserStringInput(question string) string {
+	fmt.Println(question)
+	userSelection = ""
+	fmt.Scanln(&userSelection)
+	userSelectionCapital := strings.Title(strings.ToLower(userSelection))
+	return userSelectionCapital
+}
 
 func UserInputYN(question string) bool{
 	for{
@@ -29,11 +36,4 @@ func UserInputYN(question string) bool{
 			fmt.Println("Invalid input. Please reply with 'y' or 'n'.")
 		}
 	}
-}
-func UserStringInput(question string) string {
-	fmt.Println(question)
-	userSelection = ""
-	fmt.Scanln(&userSelection)
-	userSelectionCapital := strings.Title(strings.ToLower(userSelection))
-	return userSelectionCapital
 }

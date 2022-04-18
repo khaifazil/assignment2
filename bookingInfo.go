@@ -32,7 +32,8 @@ var bookings = &linkedList{nil, nil, 0}
 func init() {
 	rand.Seed(time.Now().UnixNano())
 
-	bookings.makeNewBooking("Car2", "25/05/1994", 1300, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+
+	bookings.makeNewBooking("Car2", "03/06/2022", 0100, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
 	bookings.makeNewBooking("Car3", "25/05/1994", 1400, "john", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
 	bookings.makeNewBooking("Car1", "25/05/1994", 1500, "mary", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
 }
@@ -48,6 +49,13 @@ func makeRandomBookingId(length int) string {
 }
 
 func (b *linkedList) makeNewBooking(car string, date string, bookingTime int, userName string, pickUp string, dropOff string, contactInfo int, remarks string) error {
+	t, _ := convertTime(bookingTime)
+	d := convertDate(date)
+	carArr := getCarArr(car)
+
+	if carArr[d][t] != nil {
+		return errors.New("there is already a booking at that time and date")
+	}
 
 	bookingId := makeRandomBookingId(6)
 
@@ -68,24 +76,26 @@ func (b *linkedList) makeNewBooking(car string, date string, bookingTime int, us
 		b.head = newBookingInfoNode
 		b.tail = newBookingInfoNode
 	} else {
-		currentNode := b.head
-		for currentNode.next != nil {
-			currentNode = currentNode.next
-		}
-		newBookingInfoNode.prev = currentNode
-		currentNode.next = newBookingInfoNode
+		//Point tail.next to new
+		b.tail.next = newBookingInfoNode
+		//Point new.prev to tail
+		newBookingInfoNode.prev = b.tail
+		//Set tail to new
 		b.tail = newBookingInfoNode
 	}
+
+	(*carArr)[d][t] = newBookingInfoNode
+	// fmt.Println(carArr[d][t])
 	b.size++
 	return nil
 }
 
 func (b *linkedList) printAllBookings() error {
-	currentNode := b.head
-	index:= 1
-	if currentNode == nil {
+	if b.head == nil {
 		return errors.New("no bookings")
 	}
+	currentNode := b.head
+	index := 1
 	fmt.Println("\nBookings:")
 	fmt.Printf("\nBooking no.%v", index)
 	fmt.Printf("\nCar: %v", currentNode.car)
@@ -115,20 +125,3 @@ func (b *linkedList) printAllBookings() error {
 	}
 	return nil
 }
-
-// func makeNewBooking(date int, time int, carSelection string, userName string, pickUp string, dropOff string, contactInfo int, remarks string) {
-
-// 	bookingId := makeRandomBookingId(6)
-// 	carSelection[date][time] = bookingInfo{
-// 		bookingTime: time,
-// 		userName:    userName,
-// 		pickup:      pickUp,
-// 		dropoff:     dropOff,
-// 		car:         carSelection,
-// 		contactInfo: contactInfo,
-// 		remarks:     remarks,
-// 		bookingId:   bookingId,
-// 	}
-
-// 	fmt.Println(carSelection[date][time])
-// }

@@ -85,6 +85,21 @@ func sortBookingsByDate(arr []*bookingInfoNode, n int) []*bookingInfoNode {
 	return arr
 }
 
+func sortBookingsByTime(arr []*bookingInfoNode, n int) []*bookingInfoNode {
+	for i := 1; i < n; i++ {
+		data := arr[i]
+		last := i
+		
+		for (last > 0) && (arr[last-1].bookingTime > data.bookingTime) {
+			arr[last] = arr[last-1]
+			last--
+		}
+
+		arr[last] = data
+	}
+	return arr
+}
+
 // func updateCarArr(ptr *[365][24]*bookingInfoNode, index1 int, index2 int, address *bookingInfoNode) {
 // 	ptr[index1][index2] = address
 // }

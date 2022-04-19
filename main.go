@@ -69,8 +69,9 @@ func main() {
 					if err != nil {
 						panic(err)
 					}
+					bookingsByDate = sortBookingsByTime(bookingsByDate, len(bookingsByDate))
 					for i, booking := range bookingsByDate {
-						fmt.Printf("\nBooking no.: %v", i+1)
+						fmt.Printf("\nBooking no.: %v\n", i+1)
 						fmt.Println()
 						printBookingNode(booking)
 						fmt.Println()

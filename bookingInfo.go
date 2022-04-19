@@ -113,6 +113,7 @@ func (b *linkedList) makeNewBooking(car string, date string, bookingTime int, us
 
 	userNode, _ := userBst.searchUser(userName)
 	userNode.userBookings = append(userNode.userBookings, newBookingInfoNode)
+	userNode.userBookings = sortBookingsByTime(userNode.userBookings, len(userNode.userBookings))
 	userNode.userBookings = sortBookingsByDate(userNode.userBookings, len(userNode.userBookings))
 	// selectSort(userNode.userBookings, len(userNode.userBookings))
 

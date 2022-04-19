@@ -32,7 +32,7 @@ func main() {
 	}
 	mainMenu()
 
-	if userSelection, err := getSelection(1, 7); err != nil {
+	if userSelection, err := getSelection(1, 5); err != nil {
 		fmt.Println(err)
 		mainMenu()
 	} else {
@@ -79,7 +79,21 @@ func main() {
 					}
 					backToMain()
 				case 3:
-					//print by booking number
+					//print by booking number feature
+					// collect user booking number
+					userBookingId := userRawStringInput("Enter booking ID")
+					//retrive from current user array the booking
+					if booking, _, err := recursiveSeqSearchId(len(currentUser.userBookings), 0, currentUser.userBookings, userBookingId); err != nil {
+						panic(err)
+					}else {
+						//print booking
+						fmt.Println("----------------------")
+						fmt.Println("Here's your booking: ")
+						printBookingNode(booking)
+						fmt.Println()
+						fmt.Println("----------------------")
+					}
+					backToMain()
 				case 4:
 					main()
 				}
@@ -127,8 +141,38 @@ func main() {
 				fmt.Println("----------------------")
 				printBookingNode(booking)
 			}
-
-		case 3:
+		case 3: //modify bookings
+			
+		case 4: //delete bookings
+			userBookingId := userRawStringInput("Enter booking ID")
+			if booking, index, err := recursiveSeqSearchId(len(currentUser.userBookings), 0, currentUser.userBookings, userBookingId); err != nil {
+				panic(err)
+			}else {
+				
+				fmt.Println("----------------------")
+				fmt.Println("Here's your booking: ")
+				printBookingNode(booking)
+				fmt.Println()
+				fmt.Println("----------------------")
+				fmt.Println()
+				if userInputYN("Delete booking?"){
+					err := bookings.deleteBooking(booking, index)
+					if err != nil {
+						panic(err)
+					}
+					fmt.Println("Booking has been deleted!")
+					backToMain()
+				}else{
+					main()
+				}
+			}
+		case 5:
+			//exit program
+			if userInputYN("Are you sure you want to exit?") {
+				fmt.Println("Goodbye!")
+			}else{
+				main()
+			}
 		}
 	}
 }

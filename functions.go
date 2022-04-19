@@ -89,7 +89,7 @@ func sortBookingsByTime(arr []*bookingInfoNode, n int) []*bookingInfoNode {
 	for i := 1; i < n; i++ {
 		data := arr[i]
 		last := i
-		
+
 		for (last > 0) && (arr[last-1].bookingTime > data.bookingTime) {
 			arr[last] = arr[last-1]
 			last--
@@ -114,49 +114,61 @@ func checkDate(date string) error {
 	return nil
 }
 
-func binarySearch(arr []*bookingInfoNode, target string)int {
+func binarySearchDate(arr []*bookingInfoNode, target string) int {
 	first := 0
 	last := len(arr) - 1
 
 	for first <= last {
-		mid := (first+last)/2
+		mid := (first + last) / 2
 		if arr[mid].date == target {
 			return mid
 		} else {
 			if target < arr[mid].date {
-				last = mid -1
-			}else {
+				last = mid - 1
+			} else {
 				first = mid + 1
 			}
 		}
-
 	}
 	return -1
 }
 
-func lookForDuplicates(arr []*bookingInfoNode, n int, target string) []*bookingInfoNode {
+func lookForDupsDate(arr []*bookingInfoNode, n int, target string) []*bookingInfoNode {
 	temp := []*bookingInfoNode{}
 	for i := n; i >= 0; i-- {
 		if target != arr[i].date {
 			break
-		}else {
+		} else {
 			temp = append(temp, arr[i])
 		}
 	}
-	for i := n+1; i < len(arr); i++ {
+	for i := n + 1; i < len(arr); i++ {
 		if target != arr[i].date {
 			break
-		}else {
+		} else {
 			temp = append(temp, arr[i])
 		}
 	}
 	return temp
 }
 
-func searchBookingByDate(arr []*bookingInfoNode, date string) ([]*bookingInfoNode, error){
-	n := binarySearch(arr, date)
+func searchBookingByDate(arr []*bookingInfoNode, date string) ([]*bookingInfoNode, error) {
+	n := binarySearchDate(arr, date)
 	if n == -1 {
 		return nil, errors.New("no bookings found at that date")
 	}
-	return lookForDuplicates(arr, n, date), nil
+	return lookForDupsDate(arr, n, date), nil
+}
+
+func recursiveSeqSearchId(length int, start int, arr []*bookingInfoNode, target string) (*bookingInfoNode, int, error) {
+	if start > length-1 {
+		return nil, 0, errors.New("there are no bookings with that ID")
+	} else {
+
+		if target == arr[start].bookingId {
+			return arr[start], start, nil
+		} else {
+			return recursiveSeqSearchId(length, start+1, arr, target)
+		}
+	}
 }

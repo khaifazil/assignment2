@@ -8,9 +8,9 @@ func mainMenu() {
 	fmt.Println("=========")
 	fmt.Println("1. View your bookings")
 	fmt.Println("2. Make a new booking")
-	fmt.Println("4. Modify Booking")
-	fmt.Println("5. Delete Booking")
-	fmt.Println("7. Exit Program")
+	fmt.Println("3. Modify Booking")
+	fmt.Println("4. Delete Booking")
+	fmt.Println("5. Exit Program")
 }
 
 func bookingsMenu() {

@@ -39,7 +39,7 @@ func main() {
 		switch userSelection {
 		case 1:
 			bookingsMenu()
-			if userSelection, err := getSelection(1, 3); err != nil {
+			if userSelection, err := getSelection(1, 4); err != nil {
 				fmt.Println(err)
 				main() //todo: implement for loop
 			} else {
@@ -61,7 +61,25 @@ func main() {
 					backToMain()
 				case 2:
 					//print by date
+					userDate := userStringInput("Enter date (E.g. dd/mm/yyyy): ")
+					if err = checkDate(userDate); err != nil {
+						panic(err)
+					}
+					bookingsByDate, err:= searchBookingByDate(currentUser.userBookings, userDate)
+					if err != nil {
+						panic(err)
+					}
+					for i, booking := range bookingsByDate {
+						fmt.Printf("\nBooking no.: %v", i+1)
+						fmt.Println()
+						printBookingNode(booking)
+						fmt.Println()
+						fmt.Println("----------------------")
+					}
+					backToMain()
 				case 3:
+					//print by booking number
+				case 4:
 					main()
 				}
 			}
@@ -72,7 +90,7 @@ func main() {
 				panic(err)
 			}
 			userDate := userStringInput("Enter date (E.g. dd/mm/yyyy): ")
-			if date, err := time.Parse("02/01/2006", userDate); err != nil {
+			if date, err := time.Parse(timeFormat, userDate); err != nil {
 				panic(err)
 			} else {
 				if date.Before(time.Now()) {

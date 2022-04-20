@@ -142,7 +142,9 @@ func main() {
 				printBookingNode(booking)
 			}
 		case 3: //modify bookings
-			userBookingId := userRawStringInput("Enter booking ID")
+			fmt.Println("\nModifying Booking")
+			fmt.Println("=================")
+			userBookingId := userRawStringInput("Enter booking ID: ")
 			if booking, _, err := recursiveSeqSearchId(len(currentUser.userBookings), 0, currentUser.userBookings, userBookingId); err != nil {
 				panic(err)
 			} else {
@@ -234,6 +236,34 @@ func main() {
 						bookingTime := userIntInput("Enter booking time in 24HR format(E.g., 1300): ")
 						if bookingTime < 0100 || bookingTime > 2400 || bookingTime%100 != 0 {
 							panic(errors.New("invalid time"))
+						}
+						carArr := getCarArr(booking.car)
+						oldTime := convertTime(booking.bookingTime)
+						newTime := convertTime(bookingTime)
+						date := convertDate(booking.date)
+
+						if carArr[date][newTime] != nil {
+							fmt.Println(fmt.Errorf("%v already has a booking at that time slot", booking.car))
+								backToMain()
+						}
+						if userInputYN("Confirm the change?"){
+							(*carArr)[date][newTime] = (*carArr)[date][oldTime]
+							(*carArr)[date][oldTime] = nil
+							booking.bookingTime = bookingTime
+
+							currentUser.userBookings = sortBookingsByTime(currentUser.userBookings, len(currentUser.userBookings))
+							currentUser.userBookings = sortBookingsByDate(currentUser.userBookings, len(currentUser.userBookings))
+
+							fmt.Println("\n----------------------")
+							fmt.Println("Here's your booking after changes: ")
+							printBookingNode(booking)
+							fmt.Println()
+							fmt.Println("----------------------")
+							fmt.Println()
+
+							backToMain()
+						}else{
+							main()
 						}
 					case 4: //Pickup address
 						pickUp := userStringInput("Enter pick up address: ")

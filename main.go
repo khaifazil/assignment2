@@ -266,22 +266,78 @@ func main() {
 							main()
 						}
 					case 4: //Pickup address
-						pickUp := userStringInput("Enter pick up address: ")
-						if pickUp == "" {
+						newPickUp := userStringInput("Enter pick up address: ")
+						if newPickUp == "" {
 							panic(errors.New("pickup address not specified"))
 						}
+						if userInputYN("Confirm the change?"){
+							booking.pickUp = newPickUp
+
+							fmt.Println("\n----------------------")
+							fmt.Println("Here's your booking after changes: ")
+							printBookingNode(booking)
+							fmt.Println()
+							fmt.Println("----------------------")
+							fmt.Println()
+
+							backToMain()
+						}else{
+							main()
+						}
 					case 5: //DropOff
-						dropOff := userStringInput("Enter drop off address: ")
-						if dropOff == "" {
+						newDropOff := userStringInput("Enter drop off address: ")
+						if newDropOff == "" {
 							panic(errors.New("dropOff address not specified"))
 						}
+						if userInputYN("Confirm the change?"){
+							booking.dropOff = newDropOff
+
+							fmt.Println("\n----------------------")
+							fmt.Println("Here's your booking after changes: ")
+							printBookingNode(booking)
+							fmt.Println()
+							fmt.Println("----------------------")
+							fmt.Println()
+
+							backToMain()
+						}else{
+							main()
+						}
 					case 6: // contact
-						contactInfo := userIntInput("Enter mobile number: ")
-						if contactInfo == 0 || contactInfo < 10000000 || contactInfo > 99999999 {
+						newContactInfo := userIntInput("Enter mobile number: ")
+						if newContactInfo == 0 || newContactInfo < 10000000 || newContactInfo > 99999999 {
 							panic(errors.New("invalid mobile number"))
 						}
+						if userInputYN("Confirm the change?"){
+							booking.contactInfo = newContactInfo
+
+							fmt.Println("\n----------------------")
+							fmt.Println("Here's your booking after changes: ")
+							printBookingNode(booking)
+							fmt.Println()
+							fmt.Println("----------------------")
+							fmt.Println()
+
+							backToMain()
+						}else{
+							main()
+						}
 					case 7: // Remarks
-						// remarks := userStringInput("Remarks: ")
+						newRemarks := userStringInput("Remarks: ")
+						if userInputYN("Confirm the change?"){
+							booking.remarks = newRemarks
+
+							fmt.Println("\n----------------------")
+							fmt.Println("Here's your booking after changes: ")
+							printBookingNode(booking)
+							fmt.Println()
+							fmt.Println("----------------------")
+							fmt.Println()
+
+							backToMain()
+						}else{
+							main()
+						}
 					case 8: // back to main
 						main()
 					}

@@ -38,11 +38,11 @@ func init() {
 	userBst.createUser("doug", "password1")
 
 	bookings.makeNewBooking("Car2", "24/11/2022", 200, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
-	bookings.makeNewBooking("Car2", "20/04/2022", 300, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "20/05/2022", 300, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
 	// bookings.makeNewBooking("Car2", "03/09/2022", 400, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
 	// bookings.makeNewBooking("Car2", "08/05/2022", 500, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
 	// bookings.makeNewBooking("Car2", "17/06/2022", 600, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
-	// bookings.makeNewBooking("Car2", "02/04/2022", 700, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
+	bookings.makeNewBooking("Car2", "02/05/2022", 700, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
 	// bookings.makeNewBooking("Car2", "15/06/2022", 800, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
 	// bookings.makeNewBooking("Car2", "03/06/2022", 900, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")
 	// bookings.makeNewBooking("Car2", "03/06/2022", 1000, "khai", "dfasdfas", "sadfsdf", 98196006, "kdslfj")

@@ -204,7 +204,32 @@ func main() {
 								panic(errors.New("date given is more than one year away"))
 							}
 						}
-						
+						carArr := getCarArr(booking.car)
+						time := convertTime(booking.bookingTime)
+						oldDate := convertDate(booking.date)
+						newDate := convertDate(userDate)
+
+						if carArr[newDate][time] != nil {
+							fmt.Println(fmt.Errorf("%v already has a booking at that time slot", booking.car))
+								backToMain()
+						}
+						if userInputYN("Confirm the change?"){
+							(*carArr)[newDate][time] = (*carArr)[oldDate][time]
+							(*carArr)[oldDate][time] = nil
+							booking.date = userDate
+							currentUser.userBookings = sortBookingsByTime(currentUser.userBookings, len(currentUser.userBookings))
+							currentUser.userBookings = sortBookingsByDate(currentUser.userBookings, len(currentUser.userBookings))
+
+							fmt.Println("\n----------------------")
+							fmt.Println("Here's your booking after changes: ")
+							printBookingNode(booking)
+							fmt.Println()
+							fmt.Println("----------------------")
+							fmt.Println()
+							backToMain()
+						}else{
+							main()
+						}
 					case 3: // booking time
 						bookingTime := userIntInput("Enter booking time in 24HR format(E.g., 1300): ")
 						if bookingTime < 0100 || bookingTime > 2400 || bookingTime%100 != 0 {

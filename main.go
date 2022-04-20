@@ -65,7 +65,7 @@ func main() {
 					if err = checkDate(userDate); err != nil {
 						panic(err)
 					}
-					bookingsByDate, err:= searchBookingByDate(currentUser.userBookings, userDate)
+					bookingsByDate, err := searchBookingByDate(currentUser.userBookings, userDate)
 					if err != nil {
 						panic(err)
 					}
@@ -85,7 +85,7 @@ func main() {
 					//retrive from current user array the booking
 					if booking, _, err := recursiveSeqSearchId(len(currentUser.userBookings), 0, currentUser.userBookings, userBookingId); err != nil {
 						panic(err)
-					}else {
+					} else {
 						//print booking
 						fmt.Println("----------------------")
 						fmt.Println("Here's your booking: ")
@@ -142,27 +142,116 @@ func main() {
 				printBookingNode(booking)
 			}
 		case 3: //modify bookings
-			
-		case 4: //delete bookings
 			userBookingId := userRawStringInput("Enter booking ID")
-			if booking, index, err := recursiveSeqSearchId(len(currentUser.userBookings), 0, currentUser.userBookings, userBookingId); err != nil {
+			if booking, _, err := recursiveSeqSearchId(len(currentUser.userBookings), 0, currentUser.userBookings, userBookingId); err != nil {
 				panic(err)
-			}else {
-				
+			} else {
 				fmt.Println("----------------------")
 				fmt.Println("Here's your booking: ")
 				printBookingNode(booking)
 				fmt.Println()
 				fmt.Println("----------------------")
 				fmt.Println()
-				if userInputYN("Delete booking?"){
+				modifyBookingMenu()
+				if userSelection, error := getSelection(1, 8); error != nil {
+					fmt.Println(err)
+					main()
+				} else {
+					switch userSelection {
+					case 1: //car
+						listCars()
+						carSelection := userStringInput("Enter new car selection: ")
+						if err := checkCarSelection(carSelection); err != nil {
+							panic(err)
+						}
+						if userInputYN("Confirm the change?"){
+							//get new & old car from user userInput
+							newCarArr := getCarArr(carSelection)
+							oldCarArr := getCarArr(booking.car)
+							// convert booking time and date
+							t := convertTime(booking.bookingTime)
+							d := convertDate(booking.date)
+							// check if new car slot is full
+							if newCarArr[d][t] != nil {
+								fmt.Println(fmt.Errorf("%v already has a booking at that time slot", carSelection))
+								backToMain()
+							}
+							// transfer old booking to new arraycar
+							(*newCarArr)[d][t] = (*oldCarArr)[d][t]
+							// delete old booking
+							(*oldCarArr)[d][t] = nil
+							// change car at node
+							booking.car = carSelection
+							// print changed booking
+							fmt.Println("----------------------")
+							fmt.Println("Here's your booking after changes: ")
+							printBookingNode(booking)
+							fmt.Println()
+							fmt.Println("----------------------")
+							fmt.Println()
+							backToMain()
+						}else {
+							main()
+						}
+					case 2: //date
+						userDate := userStringInput("Enter date (E.g. dd/mm/yyyy): ")
+						if date, err := time.Parse(timeFormat, userDate); err != nil {
+							panic(err)
+						} else {
+							if date.Before(time.Now()) {
+								panic(errors.New("date given has passed"))
+							} else if date.After(time.Now().AddDate(1, 0, 0)) {
+								panic(errors.New("date given is more than one year away"))
+							}
+						}
+						
+					case 3: // booking time
+						bookingTime := userIntInput("Enter booking time in 24HR format(E.g., 1300): ")
+						if bookingTime < 0100 || bookingTime > 2400 || bookingTime%100 != 0 {
+							panic(errors.New("invalid time"))
+						}
+					case 4: //Pickup address
+						pickUp := userStringInput("Enter pick up address: ")
+						if pickUp == "" {
+							panic(errors.New("pickup address not specified"))
+						}
+					case 5: //DropOff
+						dropOff := userStringInput("Enter drop off address: ")
+						if dropOff == "" {
+							panic(errors.New("dropOff address not specified"))
+						}
+					case 6: // contact
+						contactInfo := userIntInput("Enter mobile number: ")
+						if contactInfo == 0 || contactInfo < 10000000 || contactInfo > 99999999 {
+							panic(errors.New("invalid mobile number"))
+						}
+					case 7: // Remarks
+						// remarks := userStringInput("Remarks: ")
+					case 8: // back to main
+						main()
+					}
+				}
+			}
+		case 4: //delete bookings
+			userBookingId := userRawStringInput("Enter booking ID")
+			if booking, index, err := recursiveSeqSearchId(len(currentUser.userBookings), 0, currentUser.userBookings, userBookingId); err != nil {
+				panic(err)
+			} else {
+
+				fmt.Println("----------------------")
+				fmt.Println("Here's your booking: ")
+				printBookingNode(booking)
+				fmt.Println()
+				fmt.Println("----------------------")
+				fmt.Println()
+				if userInputYN("Delete booking?") {
 					err := bookings.deleteBooking(booking, index)
 					if err != nil {
 						panic(err)
 					}
 					fmt.Println("Booking has been deleted!")
 					backToMain()
-				}else{
+				} else {
 					main()
 				}
 			}
@@ -170,7 +259,7 @@ func main() {
 			//exit program
 			if userInputYN("Are you sure you want to exit?") {
 				fmt.Println("Goodbye!")
-			}else{
+			} else {
 				main()
 			}
 		}

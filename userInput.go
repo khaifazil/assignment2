@@ -48,8 +48,14 @@ func userInputYN(question string) bool {
 
 func backToMain() {
 	fmt.Println("\nPress enter to go back to main menu...")
-		fmt.Scanln(&userSelection)
-		main()
+	fmt.Scanln(&userSelection)
+	main()
+}
+
+func backToAdminMenu() {
+	fmt.Println("\nPress enter to go back to main menu...")
+	fmt.Scanln(&userSelection)
+	adminMenuWrapper()
 }
 
 func getSelection(firstSelection int, lastSelection int) (int, error) {
@@ -57,5 +63,5 @@ func getSelection(firstSelection int, lastSelection int) (int, error) {
 	if userSelection < firstSelection || userSelection > lastSelection {
 		return userSelection, errors.New("invalid Selection")
 	}
-		return userSelection, nil
+	return userSelection, nil
 }

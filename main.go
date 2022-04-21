@@ -185,9 +185,10 @@ func main() {
 			if booking, err := bookings.makeNewBooking(carSelection, userDate, bookingTime, userName, pickUp, dropOff, contactInfo, remarks); err != nil {
 				panic(err)
 			} else {
-				fmt.Println("Booking has been made!")
+				fmt.Println("\nBooking has been made!")
 				fmt.Println("----------------------")
 				printBookingNode(booking)
+				backToMain()
 			}
 		case 3: //modify bookings
 			fmt.Println("\nModifying Booking")

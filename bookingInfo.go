@@ -215,7 +215,7 @@ func printBookingNode(ptr *bookingInfoNode) error {
 	}
 	fmt.Printf("\nCar: %v", ptr.car)
 	fmt.Printf("\nDate: %v", ptr.date)
-	fmt.Printf("\nTime: %v", ptr.bookingTime)
+	fmt.Printf("\nTime: %v HRS", ptr.bookingTime)
 	fmt.Printf("\nName: %v", ptr.userName)
 	fmt.Printf("\nPickup Address : %v", ptr.pickUp)
 	fmt.Printf("\nDropoff Address: %v", ptr.dropOff)
